@@ -17,11 +17,12 @@ export class CreateStatementController {
     let sender_id = null;
 
     const splittedPath = request.originalUrl.split("/");
-    if (splittedPath[4] === "transfer") {
-      sender_id = request.params?.user_id?.toString();
-    }
+    let type = splittedPath[4] as OperationType;
 
-    const type = splittedPath[4] as OperationType;
+    if (splittedPath[4] === "transfers") {
+      sender_id = request.params?.user_id?.toString();
+      type = OperationType.TRASNFERS;
+    }
 
     const createStatement = container.resolve(CreateStatementUseCase);
 
