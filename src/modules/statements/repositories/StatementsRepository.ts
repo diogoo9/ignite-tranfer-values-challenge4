@@ -18,12 +18,19 @@ export class StatementsRepository implements IStatementsRepository {
     amount,
     description,
     type,
+    sender_id,
   }: ICreateStatementDTO): Promise<Statement> {
+    let senderID = null;
+    if (sender_id) {
+      senderID = user_id;
+      user_id = sender_id;
+    }
     const statement = this.repository.create({
       user_id,
       amount,
       description,
       type,
+      sender_id: senderID,
     });
 
     return this.repository.save(statement);
@@ -44,17 +51,33 @@ export class StatementsRepository implements IStatementsRepository {
   }: IGetBalanceDTO): Promise<
     { balance: number } | { balance: number; statement: Statement[] }
   > {
-    const statement = await this.repository.find({
+    let statement = await this.repository.find({
       where: { user_id },
     });
 
-    const balance = statement.reduce((acc, operation) => {
-      if (operation.type === "deposit") {
+    const transferSended = await this.repository.find({
+      where: { sender_id: user_id },
+    });
+
+    let balance = statement.reduce((acc, operation) => {
+      if (operation.type === "deposit" || operation.type === "transfer") {
         return acc + parseFloat(String(operation.amount));
       } else {
         return acc - operation.amount;
       }
     }, 0);
+
+    statement = statement.concat(transferSended);
+
+    const transferedValues = transferSended.reduce(
+      (total = balance, operation) => {
+        return total + parseFloat(String(operation.amount));
+      },
+      0
+    );
+
+    console.log(transferSended);
+    balance -= transferedValues | 0;
 
     if (with_statement) {
       return {

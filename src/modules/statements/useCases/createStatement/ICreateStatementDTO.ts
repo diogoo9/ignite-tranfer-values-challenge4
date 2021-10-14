@@ -1,7 +1,7 @@
 import { Statement } from "../../entities/Statement";
 
-interface IStatement extends Statement {
-  sender_id: string;
+export interface IStatement extends Statement {
+  sender_ids: string;
 }
 
 export type ICreateStatementDTO = Pick<

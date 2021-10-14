@@ -45,16 +45,16 @@ describe("Get statement", () => {
       amount: 100,
       description: "Deposit from new year",
       type: OperationType.DEPOSIT,
+      sender_id: "",
     });
 
     const statement_id = statementResponse.id as string;
 
-    const statementOperationResponse = await getStatementOperationUseCase.execute(
-      {
+    const statementOperationResponse =
+      await getStatementOperationUseCase.execute({
         user_id,
         statement_id,
-      }
-    );
+      });
 
     expect(statementOperationResponse).toHaveProperty("id");
   });

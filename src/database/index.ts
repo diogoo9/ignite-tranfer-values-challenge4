@@ -1,3 +1,7 @@
-import { createConnection } from 'typeorm';
+import { createConnection } from "typeorm";
 
-(async () => await createConnection())();
+createConnection()
+  .then(() => console.log("ok"))
+  .catch((err) => {
+    console.warn(err);
+  });

@@ -56,6 +56,7 @@ describe("Get balance", () => {
       amount: 100,
       description: "test",
       type: "deposit" as OperationType,
+      sender_id: "",
     });
 
     const response = await getBalanceUseCase.execute({ user_id });
@@ -94,6 +95,7 @@ describe("Get balance", () => {
       type: OperationType.DEPOSIT,
       amount: 1040,
       description: "salary",
+      sender_id: "",
     });
 
     const withdraw = await createStatementUseCase.execute({
@@ -101,6 +103,7 @@ describe("Get balance", () => {
       type: OperationType.WITHDRAW,
       amount: 40,
       description: "shopping",
+      sender_id: "",
     });
 
     const withdrawTwo = await createStatementUseCase.execute({
@@ -108,6 +111,7 @@ describe("Get balance", () => {
       type: OperationType.WITHDRAW,
       amount: 80,
       description: "shopping",
+      sender_id: "",
     });
 
     const response = await getBalanceUseCase.execute({ user_id });
