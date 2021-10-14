@@ -36,7 +36,7 @@ A nova funcionalidade deverá permitir a transferência de valores entre contas.
   ```json
   {
     "id": "4d04b6ec-2280-4dc2-9432-8a00f64e7930",
-  	"sender_id": "cfd06865-11b9-412a-aa78-f47cc3e52905"
+    "sender_id": "cfd06865-11b9-412a-aa78-f47cc3e52905",
     "amount": 100,
     "description": "Transferência de valor",
     "type": "transfer",
